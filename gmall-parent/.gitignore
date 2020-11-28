@@ -9,7 +9,7 @@ target/
 **/rebel.xml
 /**/.externalToolBuilders/
 rebel.xml
-test/
+#test/
 lsp
 # Compiled class file
 *.class
