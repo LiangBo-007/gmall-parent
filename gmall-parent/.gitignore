@@ -34,3 +34,11 @@ lsp
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+common/common-util/src/main/
+common/service-util/src/main/
+common/web-util/src/main/
+service-client/src/main/
+service/service-product/src/main/
+service/service-test/src/main/
+service/src/main/
+web/src/main/
