@@ -52,6 +52,4 @@ public class CategoryServiceImpl implements CategoryService {
         List<BaseCategory3> baseCategory3s = baseCategory3Mapper.selectList(queryWrapper);
         return baseCategory3s;
     }
-
-
 }

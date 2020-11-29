@@ -30,7 +30,7 @@ public class CategoryApiController {
      */
 
     @RequestMapping("getCategory1")
-    public Result getCategory1() {
+        public Result getCategory1() {
         List<BaseCategory1> baseCategory1List = categoryService.getCategory1();
         return Result.ok(baseCategory1List);
     }
