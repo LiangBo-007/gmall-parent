@@ -51,7 +51,8 @@ public class BaseAttrInfoController {
         List<BaseAttrValue> baseAttrValues = baseAttrInfoService.getAttrValueList(attrId);
         return Result.ok(baseAttrValues);
     }
-
-
+/*
+添加新的业务信息
+* */
 }
 
