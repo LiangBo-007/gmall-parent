@@ -4,6 +4,7 @@ package com.atguigu.gmall.product.controller;
 import com.atguigu.gmall.common.result.Result;
 import com.atguigu.gmall.model.product.SpuInfo;
 import com.atguigu.gmall.product.service.SpuInfoService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,24 +12,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 /**
- * @description:
- * @time: 2020/11/30 11:16
- * @author: LIANGBO
+ * <p>
+ * 商品表 前端控制器
+ * </p>
+ *
+ * @author LIANGBO
+ * @since 2020-11-30
  */
-@RequestMapping("admin/product")
 @RestController
+@RequestMapping("admin/product")
 @CrossOrigin
-public class SpuApiController {
+public class SpuInfoController {
     @Autowired
     SpuInfoService spuInfoService;
 
     /**
-     * @description:获取商品分页详情
+     * @description:
      * @return:
-     * @time: 2020/11/30 11:17
+     * @time: 2020/11/30 14:52
      * @author: LIANG BO
      */
     @RequestMapping("{pageNo}/{size}")
@@ -37,10 +39,11 @@ public class SpuApiController {
             @PathVariable("size") Long size,
             @PathVariable("category3Id") Long category3Id
     ) {
-        Page<SpuInfo> Page = new Page<>();
+        IPage<SpuInfo> Page = new Page<>();
         Page.setSize(size);
         Page.setCurrent(PageNo);
-        List<SpuInfo> spuInfoList = spuInfoService.getpage(Page, category3Id);
-        return Result.ok(spuInfoList);
+        IPage<SpuInfo> getpage = spuInfoService.getpage(Page,category3Id);
+        return Result.ok(getpage);
     }
 }
+

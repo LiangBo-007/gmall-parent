@@ -1,9 +1,7 @@
 package com.atguigu.gmall.product.service;
 
 import com.atguigu.gmall.model.product.SpuInfo;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-
-import java.util.List;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 
 /**
  * @description:
@@ -11,5 +9,5 @@ import java.util.List;
  * @author: LIANGBO
  */
 public interface SpuInfoService {
-    List<SpuInfo> getpage(Page<SpuInfo> page, Long category3Id);
+    IPage<SpuInfo> getpage(IPage<SpuInfo> page, Long category3Id);
 }
