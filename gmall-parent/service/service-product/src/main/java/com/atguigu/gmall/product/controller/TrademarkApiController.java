@@ -22,9 +22,13 @@ public class TrademarkApiController {
     public Result getTrademarkList(){
         List<BaseTrademark> baseTrademarks = trademarkService.getTrademarkList();
 
-
         return Result.ok(baseTrademarks);
     }
 
+    @RequestMapping("baseTrademark/{page}/{limit}")
+    public Result baseTrademark() {
+        List<BaseTrademark> trademarkList=trademarkService.baseTrademark();
+        return Result.ok(trademarkList);
+    }
 
 }

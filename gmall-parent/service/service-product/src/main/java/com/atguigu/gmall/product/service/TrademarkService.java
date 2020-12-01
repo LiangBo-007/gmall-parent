@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface TrademarkService {
     List<BaseTrademark> getTrademarkList();
+
+    List<BaseTrademark> baseTrademark();
 }
