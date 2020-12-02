@@ -3,24 +3,34 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>gmall-parent</artifactId>
+        <artifactId>service</artifactId>
         <groupId>com.atguigu.gmall</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>service</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>service-test</module>
-        <module>service-product</module>
-        <module>service-item</module>
-    </modules>
+
+    <artifactId>\service-item</artifactId>
+
+    <packaging>jar</packaging>
+    <name>service-item</name>
+    <description>service-item</description>
+
     <dependencies>
         <dependency>
             <groupId>com.atguigu.gmall</groupId>
-            <artifactId>service-util</artifactId>
+            <artifactId>service-product-client</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>service-item</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
