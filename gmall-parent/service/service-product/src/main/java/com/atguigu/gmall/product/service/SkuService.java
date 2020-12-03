@@ -19,7 +19,7 @@ public interface SkuService {
 
     void cancelSale(Long skuId);
 
-
+//前端页面
     BigDecimal getPrice(Long skuId);
 
     SkuInfo getSkuInfoById(Long skuId);

@@ -8,9 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -42,26 +40,6 @@ public class ItemController {
 
         return "index";
     }
-
-    @RequestMapping("test")
-    public String test(Model model) {
-
-        model.addAttribute("hello", "hello thymeleaf");
-
-        List<String> list = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++) {
-            list.add("元素" + i);
-        }
-
-
-        model.addAttribute("list", list);
-
-
-        model.addAttribute("num", "亡者联盟");
-        return "test";
-    }
-
 }
 
 
