@@ -43,15 +43,17 @@
             <version>3.11.2</version>
         </dependency>
 
+        <!--mybatis-plus-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+
         <!--mysql-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-    </dependencies>
 
-    <build>
-        <defaultGoal>compile</defaultGoal>
-        <finalName>service-base</finalName>
-    </build>
+    </dependencies>
 </project>

@@ -3,6 +3,8 @@ package com.atguigu.gmall.product.service;
 import com.atguigu.gmall.model.product.SkuInfo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
+import java.math.BigDecimal;
+
 /**
  * @description:
  * @time: 2020/12/1 15:09
@@ -16,4 +18,9 @@ public interface SkuService {
     void onSale(Long skuId);
 
     void cancelSale(Long skuId);
+
+
+    BigDecimal getPrice(Long skuId);
+
+    SkuInfo getSkuInfoById(Long skuId);
 }

@@ -16,6 +16,7 @@
         <module>service-item</module>
     </modules>
     <dependencies>
+        <!--service-util工具类-->
         <dependency>
             <groupId>com.atguigu.gmall</groupId>
             <artifactId>service-util</artifactId>

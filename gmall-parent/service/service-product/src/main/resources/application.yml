@@ -1,8 +1,0 @@
-spring:
-  datasource:
-    username: root
-    password: root
-    url: jdbc:mysql://192.168.200.128:3306/gmall_product?serverTimezone=GMT%2B8&useSSL=false&useUnicode=true&characterEncoding=UTF-8
-    driver-class-name: com.mysql.jdbc.Driver
-swagger2:
-  enable: true
