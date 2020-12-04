@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/product")
@@ -26,6 +27,14 @@ public class ProductApiController {
 
     @Autowired
     CategoryService categoryService;
+
+
+    @RequestMapping("getSaleAttrValuesBySpu/{spuId}")
+    Map<String,Long> getSaleAttrValuesBySpu(@PathVariable("spuId") Long spuId){
+        Map<String,Long> map = spuService.getSaleAttrValuesBySpu(spuId);
+
+        return map;
+    }
 
     @RequestMapping("getPrice/{skuId}")
     BigDecimal getPrice(@PathVariable("skuId") Long skuId){
@@ -46,10 +55,9 @@ public class ProductApiController {
     }
 
 
-    @RequestMapping("getSpuSaleAttrListBySpuId/{spuId}")
-    List<SpuSaleAttr> getSpuSaleAttrListBySpuId(@PathVariable("spuId") Long spuId){
-        List<SpuSaleAttr> spuSaleAttrs = spuService.spuSaleAttrList(spuId);
-
+    @RequestMapping("getSpuSaleAttrListBySpuId/{spuId}/{skuId}")
+    List<SpuSaleAttr> getSpuSaleAttrListBySpuId(@PathVariable("spuId") Long spuId,@PathVariable("skuId") Long skuId){
+        List<SpuSaleAttr> spuSaleAttrs = spuService.getSpuSaleAttrListCheckBySku(spuId,skuId);
         return spuSaleAttrs;
     }
 

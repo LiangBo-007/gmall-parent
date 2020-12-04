@@ -1,5 +1,6 @@
 package com.atguigu.gmall.product.service.Impl;
 
+import com.atguigu.gmall.constant.RedisConst;
 import com.atguigu.gmall.model.product.SkuAttrValue;
 import com.atguigu.gmall.model.product.SkuImage;
 import com.atguigu.gmall.model.product.SkuInfo;
@@ -12,6 +13,7 @@ import com.atguigu.gmall.product.service.SkuService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -35,6 +37,9 @@ public class SkuserviceImpl implements SkuService {
 
     @Autowired
     SkuSaleAttrValueMapper skuSaleAttrValueMapper;
+    /*注入redis缓存*/
+    @Autowired
+    RedisTemplate redisTemplate;
 
 
     @Override
@@ -82,18 +87,35 @@ public class SkuserviceImpl implements SkuService {
  * @time: 2020/12/2 23:03
  * @author: LIANG BO
  */
-    @Override
-    public SkuInfo getSkuInfoById(Long skuId) {
+
+@Override
+public SkuInfo getSkuInfoById(Long skuId) {
+    long currentTimeMillisStart = System.currentTimeMillis();
+    SkuInfo skuInfo = null;
+    // 访问nosql
+    skuInfo = (SkuInfo) redisTemplate.opsForValue().get(RedisConst.SKUKEY_PREFIX+skuId+RedisConst.SKUKEY_SUFFIX);
+    if(null==skuInfo){
+        // 访问db
+        skuInfo = getSkuInfoByIdFromDb(skuId);
+
+        // 同步缓存
+        redisTemplate.opsForValue().set(RedisConst.SKUKEY_PREFIX+skuId+RedisConst.SKUKEY_SUFFIX,skuInfo);
+    }
+
+    long currentTimeMillisEnd = System.currentTimeMillis();
+    System.out.println(currentTimeMillisEnd-currentTimeMillisStart+"毫秒");
+    return skuInfo;
+}
+
+    private SkuInfo getSkuInfoByIdFromDb(Long skuId) {
         SkuInfo skuInfo = skuInfoMapper.selectById(skuId);
 
         QueryWrapper<SkuImage> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("sku_id",skuId);
         List<SkuImage> skuImages = skuImageMapper.selectList(queryWrapper);
         skuInfo.setSkuImageList(skuImages);
-
         return skuInfo;
     }
-
 
 
 

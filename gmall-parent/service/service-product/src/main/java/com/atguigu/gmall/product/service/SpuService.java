@@ -1,12 +1,10 @@
 package com.atguigu.gmall.product.service;
 
-import com.atguigu.gmall.model.product.BaseSaleAttr;
-import com.atguigu.gmall.model.product.SpuImage;
-import com.atguigu.gmall.model.product.SpuInfo;
-import com.atguigu.gmall.model.product.SpuSaleAttr;
+import com.atguigu.gmall.model.product.*;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SpuService {
 
@@ -16,7 +14,11 @@ public interface SpuService {
 
     void saveSpuInfo(SpuInfo spuInfo);
 
-    List<SpuImage> spuImageList(Long spuId);
+    List<SpuSaleAttr> getSpuSaleAttrListCheckBySku(Long spuId, Long skuId);
 
     List<SpuSaleAttr> spuSaleAttrList(Long spuId);
+
+    List<SpuImage> spuImageList(Long spuId);
+
+    Map<String,Long> getSaleAttrValuesBySpu(Long spuId);
 }
