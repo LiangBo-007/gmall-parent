@@ -15,7 +15,7 @@ public class ItemApiController {
 
     @Autowired
     ItemService itemService;
-
+    //商品页面信息封装Map
     @RequestMapping("getItem/{skuId}")
     Map<String,Object> getItem(@PathVariable("skuId") Long skuId){
 
