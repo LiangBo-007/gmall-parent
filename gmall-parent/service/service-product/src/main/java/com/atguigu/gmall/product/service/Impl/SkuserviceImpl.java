@@ -1,6 +1,6 @@
 package com.atguigu.gmall.product.service.Impl;
 
-import com.atguigu.gmall.constant.RedisConst;
+import com.atguigu.gmall.config.GmallCache;
 import com.atguigu.gmall.model.product.SkuAttrValue;
 import com.atguigu.gmall.model.product.SkuImage;
 import com.atguigu.gmall.model.product.SkuInfo;
@@ -69,54 +69,43 @@ public class SkuserviceImpl implements SkuService {
         skuInfoMapper.updateById(skuInfo);
         System.out.println("同步搜索引擎");
     }
-/**
- *  @description:获取价格信息
- * @return:
- * @time: 2020/12/2 23:03
- * @author: LIANG BO
- */
+
+    /**
+     * @description:获取价格信息
+     * @return:
+     * @time: 2020/12/2 23:03
+     * @author: LIANG BO
+     */
     @Override
     public BigDecimal getPrice(Long skuId) {
         SkuInfo skuInfo = skuInfoMapper.selectById(skuId);
 
         return skuInfo.getPrice();
     }
-/**
- *  @description:获取页面信息
- * @return:
- * @time: 2020/12/2 23:03
- * @author: LIANG BO
- */
 
-@Override
-public SkuInfo getSkuInfoById(Long skuId) {
-    long currentTimeMillisStart = System.currentTimeMillis();
-    SkuInfo skuInfo = null;
-    // 访问nosql
-    skuInfo = (SkuInfo) redisTemplate.opsForValue().get(RedisConst.SKUKEY_PREFIX+skuId+RedisConst.SKUKEY_SUFFIX);
-    if(null==skuInfo){
-        // 访问db
-        skuInfo = getSkuInfoByIdFromDb(skuId);
+    /**
+     * @description:获取页面信息
+     * @return:
+     * @time: 2020/12/2 23:03
+     * @author: LIANG BO
+     */
 
-        // 同步缓存
-        redisTemplate.opsForValue().set(RedisConst.SKUKEY_PREFIX+skuId+RedisConst.SKUKEY_SUFFIX,skuInfo);
+    @Override
+    @GmallCache
+    public SkuInfo getSkuInfoById(Long skuId) {
+        SkuInfo skuInfoByIdFromDb = getSkuInfoByIdFromDb(skuId);
+        return skuInfoByIdFromDb;
     }
-
-    long currentTimeMillisEnd = System.currentTimeMillis();
-    System.out.println(currentTimeMillisEnd-currentTimeMillisStart+"毫秒");
-    return skuInfo;
-}
 
     private SkuInfo getSkuInfoByIdFromDb(Long skuId) {
         SkuInfo skuInfo = skuInfoMapper.selectById(skuId);
 
         QueryWrapper<SkuImage> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("sku_id",skuId);
+        queryWrapper.eq("sku_id", skuId);
         List<SkuImage> skuImages = skuImageMapper.selectList(queryWrapper);
         skuInfo.setSkuImageList(skuImages);
         return skuInfo;
     }
-
 
 
     @Override
