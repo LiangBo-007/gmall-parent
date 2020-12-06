@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan({"com.atguigu.gmall"})
 @EnableDiscoveryClient
 @EnableFeignClients("com.atguigu.gmall")
-public class ServiceItemApplication {
+public class  ServiceItemApplication {
 
     public static void main(String[] args) {
 
