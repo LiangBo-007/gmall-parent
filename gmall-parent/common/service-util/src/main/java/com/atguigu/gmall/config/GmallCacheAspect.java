@@ -76,6 +76,7 @@ public class GmallCacheAspect {
 
             }
         }
+        System.out.println(1);
         return result;
     }
 }

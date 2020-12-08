@@ -54,7 +54,7 @@ public class BaseAttrInfoServiceImpl extends ServiceImpl<BaseAttrInfoMapper, Bas
     }
 
     /**
-     * @description:保存信息
+     * @description:保存和修改信息
      * @return:
      * @time: 2020/11/29 13:45
      * @author: LIANG BO

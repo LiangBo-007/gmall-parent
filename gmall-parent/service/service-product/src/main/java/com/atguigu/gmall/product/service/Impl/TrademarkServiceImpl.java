@@ -14,6 +14,7 @@ public class TrademarkServiceImpl implements TrademarkService {
     @Autowired
     BaseTrademarkMapper baseTrademarkMapper;
 
+    //查询品牌
     @Override
     public List<BaseTrademark> getTrademarkList() {
         return baseTrademarkMapper.selectList(null);
@@ -22,6 +23,6 @@ public class TrademarkServiceImpl implements TrademarkService {
     @Override
     public List<BaseTrademark> baseTrademark() {
 
-         return baseTrademarkMapper.selectList(null);
+        return baseTrademarkMapper.selectList(null);
     }
 }

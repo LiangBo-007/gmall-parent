@@ -1,5 +1,6 @@
 package com.atguigu.gmall.product.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.atguigu.gmall.model.product.BaseCategoryView;
 import com.atguigu.gmall.model.product.SkuInfo;
 import com.atguigu.gmall.model.product.SpuSaleAttr;
@@ -28,16 +29,25 @@ public class ProductApiController {
     @Autowired
     CategoryService categoryService;
 
+    @RequestMapping("getBaseCategoryList")
+    List<JSONObject> getBaseCategoryList(){
+
+        List<JSONObject> list = categoryService.getBaseCategoryList();
+
+        return list;
+    }
+
+
 
     @RequestMapping("getSaleAttrValuesBySpu/{spuId}")
-    Map<String,Long> getSaleAttrValuesBySpu(@PathVariable("spuId") Long spuId){
-        Map<String,Long> map = spuService.getSaleAttrValuesBySpu(spuId);
+    Map<String, Long> getSaleAttrValuesBySpu(@PathVariable("spuId") Long spuId) {
+        Map<String, Long> map = spuService.getSaleAttrValuesBySpu(spuId);
 
         return map;
     }
 
     @RequestMapping("getPrice/{skuId}")
-    BigDecimal getPrice(@PathVariable("skuId") Long skuId){
+    BigDecimal getPrice(@PathVariable("skuId") Long skuId) {
 
         BigDecimal bigDecimal = new BigDecimal("0");
 
@@ -48,7 +58,7 @@ public class ProductApiController {
     }
 
     @RequestMapping("getSkuInfoById/{skuId}")
-    SkuInfo getSkuInfoById(@PathVariable("skuId") Long skuId){
+    SkuInfo getSkuInfoById(@PathVariable("skuId") Long skuId) {
         SkuInfo skuInfo = skuService.getSkuInfoById(skuId);
 
         return skuInfo;
@@ -56,13 +66,13 @@ public class ProductApiController {
 
 
     @RequestMapping("getSpuSaleAttrListBySpuId/{spuId}/{skuId}")
-    List<SpuSaleAttr> getSpuSaleAttrListBySpuId(@PathVariable("spuId") Long spuId,@PathVariable("skuId") Long skuId){
-        List<SpuSaleAttr> spuSaleAttrs = spuService.getSpuSaleAttrListCheckBySku(spuId,skuId);
+    List<SpuSaleAttr> getSpuSaleAttrListBySpuId(@PathVariable("spuId") Long spuId, @PathVariable("skuId") Long skuId) {
+        List<SpuSaleAttr> spuSaleAttrs = spuService.getSpuSaleAttrListCheckBySku(spuId, skuId);
         return spuSaleAttrs;
     }
 
     @RequestMapping("getCategoryViewByCategory3Id/{category3Id}")
-    BaseCategoryView getCategoryViewByCategory3Id(@PathVariable("category3Id")  Long category3Id){
+    BaseCategoryView getCategoryViewByCategory3Id(@PathVariable("category3Id") Long category3Id) {
         BaseCategoryView baseCategoryView = categoryService.getCategoryViewByCategory3Id(category3Id);
 
         return baseCategoryView;

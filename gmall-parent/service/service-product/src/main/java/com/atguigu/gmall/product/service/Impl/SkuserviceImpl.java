@@ -13,7 +13,6 @@ import com.atguigu.gmall.product.service.SkuService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -37,9 +36,7 @@ public class SkuserviceImpl implements SkuService {
 
     @Autowired
     SkuSaleAttrValueMapper skuSaleAttrValueMapper;
-    /*注入redis缓存*/
-    @Autowired
-    RedisTemplate redisTemplate;
+
 
 
     @Override
