@@ -36,7 +36,9 @@ public class SkuserviceImpl implements SkuService {
 
     @Autowired
     SkuSaleAttrValueMapper skuSaleAttrValueMapper;
-
+   /* @Autowired
+    ListFeignClient listFeignClient;
+*/
 
 
     @Override

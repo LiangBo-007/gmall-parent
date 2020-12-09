@@ -32,6 +32,8 @@
             <groupId>net.oschina.zcx7878</groupId>
             <artifactId>fastdfs-client-java</artifactId>
         </dependency>
+        <!--搜索同步-->
+
     </dependencies>
 
 
