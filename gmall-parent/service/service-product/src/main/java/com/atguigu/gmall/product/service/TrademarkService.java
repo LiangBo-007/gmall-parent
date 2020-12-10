@@ -8,4 +8,6 @@ public interface TrademarkService {
     List<BaseTrademark> getTrademarkList();
 
     List<BaseTrademark> baseTrademark();
+
+    BaseTrademark getTrademarkById(Long tmId);
 }

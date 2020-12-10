@@ -25,4 +25,11 @@ public class TrademarkServiceImpl implements TrademarkService {
 
         return baseTrademarkMapper.selectList(null);
     }
+
+    //es品牌信息
+    @Override
+    public BaseTrademark getTrademarkById(Long tmId) {
+        return baseTrademarkMapper.selectById(tmId);
+    }
+
 }

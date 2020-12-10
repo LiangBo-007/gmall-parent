@@ -1,6 +1,7 @@
 package com.atguigu.gmall.product.service.Impl;
 
 import com.atguigu.gmall.config.GmallCache;
+import com.atguigu.gmall.list.client.ListFeignClient;
 import com.atguigu.gmall.model.product.SkuAttrValue;
 import com.atguigu.gmall.model.product.SkuImage;
 import com.atguigu.gmall.model.product.SkuInfo;
@@ -36,9 +37,9 @@ public class SkuserviceImpl implements SkuService {
 
     @Autowired
     SkuSaleAttrValueMapper skuSaleAttrValueMapper;
-   /* @Autowired
+
+    @Autowired
     ListFeignClient listFeignClient;
-*/
 
 
     @Override
@@ -52,11 +53,14 @@ public class SkuserviceImpl implements SkuService {
     //上架
     @Override
     public void onSale(Long skuId) {
+
         SkuInfo skuInfo = new SkuInfo();
         skuInfo.setIsSale(1);
         skuInfo.setId(skuId);
         skuInfoMapper.updateById(skuInfo);
         System.out.println("同步搜索引擎");
+        listFeignClient.onSale(skuId);
+
     }
 
     //下架
@@ -67,6 +71,7 @@ public class SkuserviceImpl implements SkuService {
         skuInfo.setId(skuId);
         skuInfoMapper.updateById(skuInfo);
         System.out.println("同步搜索引擎");
+        listFeignClient.cancelSale(skuId);
     }
 
     /**

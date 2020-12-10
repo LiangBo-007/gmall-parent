@@ -1,12 +1,12 @@
 package com.atguigu.gmall.product.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.atguigu.gmall.model.list.SearchAttr;
 import com.atguigu.gmall.model.product.BaseCategoryView;
+import com.atguigu.gmall.model.product.BaseTrademark;
 import com.atguigu.gmall.model.product.SkuInfo;
 import com.atguigu.gmall.model.product.SpuSaleAttr;
-import com.atguigu.gmall.product.service.CategoryService;
-import com.atguigu.gmall.product.service.SkuService;
-import com.atguigu.gmall.product.service.SpuService;
+import com.atguigu.gmall.product.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +28,36 @@ public class ProductApiController {
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    BaseAttrInfoService baseAttrInfoService;
+
+    @Autowired
+    TrademarkService trademarkService;
+/**
+ *  @description:
+ * @return: es根据skuid获取搜索信息
+ * @time: 2020/12/9 23:06
+ * @author: LIANG BO
+ */    
+    @RequestMapping("getSearchAttrList/{skuId}")
+    List<SearchAttr> getSearchAttrList(@PathVariable("skuId") Long skuId){
+
+        List<SearchAttr> searchAttrs = baseAttrInfoService.getSearchAttrList(skuId);
+
+        return searchAttrs;
+    }
+/**
+ *  @description:
+ * @return: es尚品品牌信息
+ * @time: 2020/12/9 23:06
+ * @author: LIANG BO
+ */    
+    @RequestMapping("getTrademarkById/{tmId}")
+    BaseTrademark getTrademarkById(@PathVariable("tmId") Long tmId){
+        BaseTrademark baseTrademark =  trademarkService.getTrademarkById(tmId);
+        return baseTrademark;
+    }
 
     @RequestMapping("getBaseCategoryList")
     List<JSONObject> getBaseCategoryList(){

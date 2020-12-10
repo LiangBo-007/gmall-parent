@@ -1,5 +1,6 @@
 package com.atguigu.gmall.product.service;
 
+import com.atguigu.gmall.model.list.SearchAttr;
 import com.atguigu.gmall.model.product.BaseAttrInfo;
 import com.atguigu.gmall.model.product.BaseAttrValue;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -21,4 +22,6 @@ public interface BaseAttrInfoService extends IService<BaseAttrInfo> {
     List<BaseAttrValue> getAttrValueList(Long attrId);
 
     List<BaseAttrInfo> attrInfoList(Long category3Id);
+
+    List<SearchAttr> getSearchAttrList(Long skuId);
 }

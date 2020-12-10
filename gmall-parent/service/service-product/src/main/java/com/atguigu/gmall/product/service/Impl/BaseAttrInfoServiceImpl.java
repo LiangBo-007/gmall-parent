@@ -1,6 +1,7 @@
 package com.atguigu.gmall.product.service.Impl;
 
 
+import com.atguigu.gmall.model.list.SearchAttr;
 import com.atguigu.gmall.model.product.BaseAttrInfo;
 import com.atguigu.gmall.model.product.BaseAttrValue;
 import com.atguigu.gmall.product.mapper.BaseAttrInfoMapper;
@@ -51,6 +52,12 @@ public class BaseAttrInfoServiceImpl extends ServiceImpl<BaseAttrInfoMapper, Bas
             baseAttrInfo.setAttrValueList(baseAttrInfos);
 */
         return baseAttrInfos;
+    }
+
+    @Override
+    public List<SearchAttr> getSearchAttrList(Long skuId) {
+        List<SearchAttr> searchAttrs = baseAttrInfoMapper.selectSearchAttrList(skuId);
+        return searchAttrs;
     }
 
     /**
