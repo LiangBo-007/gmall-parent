@@ -3,8 +3,11 @@ package com.atguigu.gmall.list.Controller;
 import com.alibaba.fastjson.JSONObject;
 import com.atguigu.gmall.common.result.Result;
 import com.atguigu.gmall.list.service.ListService;
+import com.atguigu.gmall.model.list.SearchParam;
+import com.atguigu.gmall.model.list.SearchResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,18 +27,24 @@ public class ListApiController {
         return list;
     }
 
-  //上架同步搜索
-  @RequestMapping("onSale/{skuId}")
-  void onSale(@PathVariable("skuId")  Long skuId){
+    //上架同步搜索
+    @RequestMapping("onSale/{skuId}")
+    void onSale(@PathVariable("skuId") Long skuId) {
 
-      listService.onSale(skuId);
+        listService.onSale(skuId);
 
-      System.out.println("搜索系统上架商品");
-  }
+        System.out.println("搜索系统上架商品");
+    }
 
+    //同步搜索
+    @RequestMapping("list")
+    SearchResponseVo list(@RequestBody SearchParam searchParam) {
+        SearchResponseVo searchResponseVo = listService.list(searchParam);
+        return searchResponseVo;
+    }
 
     @RequestMapping("cancelSale/{skuId}")
-    void cancelSale(@PathVariable("skuId") Long skuId){
+    void cancelSale(@PathVariable("skuId") Long skuId) {
 
         listService.cancelSale(skuId);
 
