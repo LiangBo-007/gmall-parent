@@ -2,6 +2,7 @@ package com.atguigu.gmall.item.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.atguigu.gmall.item.service.ItemService;
+import com.atguigu.gmall.list.client.ListFeignClient;
 import com.atguigu.gmall.model.product.BaseCategoryView;
 import com.atguigu.gmall.model.product.SkuInfo;
 import com.atguigu.gmall.model.product.SpuSaleAttr;
@@ -25,6 +26,8 @@ public class ItemServiceImpl implements ItemService {
     ProductFeignClient productFeignClient;
     @Autowired
     ThreadPoolExecutor threadPoolExecutor;
+    @Autowired
+    ListFeignClient listFeignClient;
 
     //调用多线程查询
     @Override
@@ -32,6 +35,8 @@ public class ItemServiceImpl implements ItemService {
         long currentTimeMillisStart = System.currentTimeMillis();
         Map<String, Object> mapResult = getItemByThread(skuId);
         long currentTimeMillisEnd = System.currentTimeMillis();
+        // 为当前skuId的搜索引擎增加热度值
+        listFeignClient.hotScore(skuId);
         System.out.println("执行时间：" + (currentTimeMillisEnd - currentTimeMillisStart));
         return mapResult;
     }
@@ -71,7 +76,7 @@ public class ItemServiceImpl implements ItemService {
                 BaseCategoryView baseCategoryView = productFeignClient.getCategoryViewByCategory3Id(skuInfo.getCategory3Id());
                 mapResult.put("categoryView", baseCategoryView);
             }
-        },threadPoolExecutor);
+        }, threadPoolExecutor);
         CompletableFuture<Void> completableFutureJsonMap = completableFutureSkuInfo.thenAcceptAsync(new Consumer<SkuInfo>() {
             @Override
             public void accept(SkuInfo skuInfo) {
@@ -80,9 +85,9 @@ public class ItemServiceImpl implements ItemService {
                 System.out.println(json);
                 mapResult.put("valuesSkuJson", json);
             }
-        },threadPoolExecutor);
+        }, threadPoolExecutor);
 
-        CompletableFuture.allOf(completableFutureSkuInfo,completableFuturePrice,completableFutureSaleAttrs,completableFutureCategory,completableFutureJsonMap).join();
+        CompletableFuture.allOf(completableFutureSkuInfo, completableFuturePrice, completableFutureSaleAttrs, completableFutureCategory, completableFutureJsonMap).join();
 
         return mapResult;
     }
