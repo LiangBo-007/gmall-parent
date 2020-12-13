@@ -27,6 +27,17 @@ public class ListApiController {
         return list;
     }
 
+    /**
+     * @description:
+     * @return: 热度值
+     * @time: 2020/12/13 1:51
+     * @author: LIANG BO
+     */
+    @RequestMapping("hotScore/{skuId}")
+    void hotScore(@PathVariable("skuId") Long skuId) {
+        listService.hotScore(skuId);
+    }
+
     //上架同步搜索
     @RequestMapping("onSale/{skuId}")
     void onSale(@PathVariable("skuId") Long skuId) {

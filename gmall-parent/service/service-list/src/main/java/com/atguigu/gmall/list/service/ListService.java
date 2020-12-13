@@ -16,4 +16,6 @@ public interface ListService {
     void cancelSale(Long skuId);
 
     SearchResponseVo list(SearchParam searchParam);
+
+    void hotScore(Long skuId);
 }

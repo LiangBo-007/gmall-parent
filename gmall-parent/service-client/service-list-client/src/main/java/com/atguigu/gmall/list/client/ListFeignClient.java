@@ -25,4 +25,8 @@ public interface ListFeignClient {
 
     @RequestMapping("api/list/list")
     SearchResponseVo list(@RequestBody SearchParam searchParam);
+
+    //热度值
+    @RequestMapping("api/list/hotScore/{skuId}")
+    void hotScore(@PathVariable("skuId") Long skuId);
 }
