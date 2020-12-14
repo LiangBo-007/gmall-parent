@@ -151,9 +151,9 @@
 
                         <dl v-for="spuSaleAttr in spuSaleAttrList" :key="spuSaleAttr.id">
                             <dt>
-                            <div class="fl title">
-                                <i>{{spuSaleAttr.saleAttrName}}</i>
-                            </div>
+                                <div class="fl title">
+                                    <i>{{spuSaleAttr.saleAttrName}}</i>
+                                </div>
                             </dt>
                             <dd v-for="spuSaleAttrValue in spuSaleAttr.spuSaleAttrValueList" :key="spuSaleAttrValue.id" @click="spuSaleAttrFun(spuSaleAttr.index, spuSaleAttrValue.id)">
                                 <a href="javascript:;" :class="{'selected':spuSaleAttrValue.isChecked == 1}">{{spuSaleAttrValue.saleAttrValueName}}<span title="点击取消选择">&nbsp;</span></a>
@@ -1003,9 +1003,9 @@
         el: '#itemArray',
         data: {
             skuId: [[${skuInfo?.id}]],
+            spuId : [[${skuInfo?.spuId}]],
             valuesSku: '',
             skuNum: 1,
-            spuId:[[${skuInfo?.spuId}]],
 
             selectValuesSkus: [],
             isAddCart: true,
@@ -1015,15 +1015,15 @@
         },
 
         created() {
-            this.init()
-
+            this.init();
+            this.spu_json(this.spuId);
         },
 
         methods: {
-            spu_json(supId){
-                $.getJSON("/spu/spu_"+this.spuId+".json",function (json) {
+            spu_json(spuId){
+                $.getJSON("/spu/spu_"+spuId+".json",function (json) {
                     if(json){
-                         alert(JSON.stringify(json));
+                        // alert(JSON.stringify(json));
                     }else{
                         // 查询后台生成json静态文件
                     }
@@ -1051,17 +1051,22 @@
             },
 
             spuSaleAttrFun(index, spuSaleAttrValueId) {
-                debugger
+
                 this.isAddCart = true
-                var valuesSkuJson = JSON.parse(this.valuesSkuJson);
+                //alert(this.valuesSkuJson);
+                var valuesSkuJson = JSON.parse(this.valuesSkuJson);// 页面保存的jsonMap
 
                 //根据索引替换已选中的spuSaleAttrValueId
                 this.selectValuesSkus[index] = spuSaleAttrValueId
 
-                var valuesSku = this.selectValuesSkus.join('|')
+
+                var valuesSku = this.selectValuesSkus.join('|')// 用户选择的属性值id
+
+                //alert(valuesSku);
+
                 //查看新组装的数据是否存在skuId，如果存在跳到该页面，如果不存在控制选中状态
                 var curSkuId = valuesSkuJson[valuesSku]
-
+                //alert(curSkuId)
                 if (curSkuId) {
                     if(curSkuId != this.skuId) {
                         window.location.href = '/' + curSkuId + '.html'

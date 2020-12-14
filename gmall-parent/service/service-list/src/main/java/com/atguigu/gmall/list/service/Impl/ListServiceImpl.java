@@ -135,22 +135,22 @@ public class ListServiceImpl implements ListService {
 
     @Override
     public void hotScore(Long skuId) {
+
         // 将热度值更新进缓冲区
-        Integer hotScoreRedis = (Integer) redisTemplate.opsForValue().get("hotScore:" + skuId);
-        if (null != hotScoreRedis) {
+        Integer hotScoreRedis = (Integer)redisTemplate.opsForValue().get("hotScore:" + skuId);
+        if(null!=hotScoreRedis){
             hotScoreRedis++;
-            redisTemplate.opsForValue().set("hotScore:" + skuId, hotScoreRedis);
-        } else {
-            redisTemplate.opsForValue().set("hotScore:" + skuId, 1);
+            // redisTemplate.opsForValue().set("hotScore:" + skuId,hotScoreRedis);
+            redisTemplate.opsForValue().increment("hotScore:" + skuId,1);
+            if(hotScoreRedis%10==0){
+                // 将热度值更新进es
+                Goods goods = goodsElasticsearchRepository.findById(skuId).get();
+                goods.setHotScore(Long.parseLong(hotScoreRedis+""));
+                goodsElasticsearchRepository.save(goods);
+            }
+        }else {
+            redisTemplate.opsForValue().set("hotScore:" + skuId,1);
 
-        }
-
-
-        if (hotScoreRedis % 10 == 0) {
-            // 将热度值更新进es
-            Goods goods = goodsElasticsearchRepository.findById(skuId).get();
-            goods.setHotScore(Long.parseLong(hotScoreRedis + ""));
-            goodsElasticsearchRepository.save(goods);
         }
 
     }
@@ -316,7 +316,7 @@ public class ListServiceImpl implements ListService {
         highlightBuilder.postTags("</span>");
         searchSourceBuilder.highlighter(highlightBuilder);
         // 5.排序
-     if (!StringUtils.isEmpty(order)) {
+        if (!StringUtils.isEmpty(order)) {
             String key = order.split(":")[0];
             String sort = order.split(":")[1];
 
