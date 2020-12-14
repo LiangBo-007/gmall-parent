@@ -140,17 +140,15 @@ public class ListServiceImpl implements ListService {
         if (null != hotScoreRedis) {
             hotScoreRedis++;
             redisTemplate.opsForValue().set("hotScore:" + skuId, hotScoreRedis);
+            if (hotScoreRedis % 10 == 0) {
+                // 将热度值更新进es
+                Goods goods = goodsElasticsearchRepository.findById(skuId).get();
+                goods.setHotScore(Long.parseLong(hotScoreRedis + ""));
+                goodsElasticsearchRepository.save(goods);
+            }
         } else {
             redisTemplate.opsForValue().set("hotScore:" + skuId, 1);
 
-        }
-
-
-        if (hotScoreRedis % 10 == 0) {
-            // 将热度值更新进es
-            Goods goods = goodsElasticsearchRepository.findById(skuId).get();
-            goods.setHotScore(Long.parseLong(hotScoreRedis + ""));
-            goodsElasticsearchRepository.save(goods);
         }
 
     }
@@ -316,7 +314,7 @@ public class ListServiceImpl implements ListService {
         highlightBuilder.postTags("</span>");
         searchSourceBuilder.highlighter(highlightBuilder);
         // 5.排序
-     if (!StringUtils.isEmpty(order)) {
+        if (!StringUtils.isEmpty(order)) {
             String key = order.split(":")[0];
             String sort = order.split(":")[1];
 
