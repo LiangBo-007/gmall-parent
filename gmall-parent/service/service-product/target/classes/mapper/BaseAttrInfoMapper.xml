@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.gmall.product.mapper.BaseAttrInfoMapper">
+
+
+    <select id="selectAttrInfoList" resultMap="selectAttrInfoListMap">
+        SELECT
+            bi.id as bi_id ,bv.id as bv_id ,bi.*,bv.*
+        FROM
+            base_attr_info bi,
+            base_attr_value bv
+        WHERE
+            bi.id = bv.attr_id
+        and bi.category_level = #{category_level} and bi.category_id = #{category_id}
+    </select>
+
+    <select id="selectSearchAttrList" resultType="com.atguigu.gmall.model.list.SearchAttr">
+   SELECT
+            bai.id AS attrId,
+            bav.value_name AS attrValue,
+            bai.attr_name AS attrName
+        FROM
+            sku_attr_value sav,
+            base_attr_info bai,
+            base_attr_value bav
+        WHERE
+            bai.id = bav.attr_id
+        AND sav.value_id = bav.id
+        AND sav.sku_id = #{skuId}
+    </select>
+    <resultMap id="selectSearchAttrListMap" type="com.atguigu.gmall.model.list.SearchAttr" autoMapping="true">
+
+    </resultMap>
+    <resultMap id="selectAttrInfoListMap" type="com.atguigu.gmall.model.product.BaseAttrInfo" autoMapping="true">
+
+        <id property="id" column="bi_id"></id>
+
+        <collection property="attrValueList" ofType="com.atguigu.gmall.model.product.BaseAttrValue" autoMapping="true">
+            <id property="id" column="bv_id"></id>
+        </collection>
+
+    </resultMap>
+
+</mapper>
