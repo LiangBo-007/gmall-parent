@@ -43,7 +43,19 @@ public class UserInfo extends BaseEntity {
 
     @ApiModelProperty(value = "用户级别")
     @TableField("user_level")
+
     private String userLevel;
+    @TableField(exist = false)
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

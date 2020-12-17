@@ -371,9 +371,8 @@
         methods: {
             init() {
                 cart.cartList().then(response => {
-                     debugger
                     this.data = response.data.data
-
+                    // alert(JSON.stringify(response.data.data));
                     this.compute()
                 })
             },

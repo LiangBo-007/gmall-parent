@@ -32,6 +32,7 @@ public class ItemController {
 
         model.addAllAttributes(map);
 
+
         return "item/index";
     }
 }

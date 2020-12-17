@@ -54,7 +54,7 @@ public class CartServiceImpl implements CartService {
             cartInfoMapper.insert(cartInfo);
         }else{
             cartInfo = cartInfoFromDb;// 如果已经添加过，后面要将db的cartInfo覆盖掉缓存
-            cartInfo.setSkuNum(cartInfoFromDb.getSkuNum()+cartInfo.getSkuNum());
+            cartInfo.setSkuNum(cartInfoFromDb.getSkuNum()+skuNum);
             cartInfoMapper.update(cartInfo,queryWrapper);
 
         }
@@ -72,7 +72,7 @@ public class CartServiceImpl implements CartService {
         // 先取缓存数据
         List<CartInfo> cartInfos = (List<CartInfo>) redisTemplate.opsForHash().values("user:" + cartInfo.getUserId() + ":cart");
 
-        if (null == cartInfos && cartInfos.size() <= 0) {
+        if (null == cartInfos || cartInfos.size() <= 0) {
             Map<String, Object> cacheMap = new HashMap();
             // 查询数据库
             QueryWrapper<CartInfo> cartInfoQueryWrapper = new QueryWrapper<>();

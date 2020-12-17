@@ -12,5 +12,5 @@ public interface CartFeignClient {
     void addCart(@RequestBody CartInfo cartInfo);
 
     @RequestMapping("api/cart/cartList")
-    void cartList(@RequestBody CartInfo cartInfo);
+    void cartList();
 }

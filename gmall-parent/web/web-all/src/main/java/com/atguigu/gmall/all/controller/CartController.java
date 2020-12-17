@@ -15,18 +15,18 @@ public class CartController {
     @RequestMapping("addCart.html")
     public String addCart(Long skuId, Long skuNum, CartInfo cartInfo){
 
-        String userId = "1";// 写死userId，通过sso系统获得
+        String userId = "1";
         cartInfo.setUserId(userId);
 
         cartFeignClient.addCart(cartInfo);
 
-        return "redirect:/cart/addCart.html?skuNum="+cartInfo.getSkuNum();
+        return "redirect:cart/addCart.html?skuNum="+cartInfo.getSkuNum();
     }
 
     @RequestMapping("cart/cart.html")
     public String cartList(){
 
-        String userId = "1";// 写死userId，通过sso系统获得
+        String userId = "1";
 
         return "cart/index";
     }

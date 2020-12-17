@@ -88,9 +88,6 @@ public class listController {
             urlParam.append("&trademark="+trademark);
         }
 
-//       if(!StringUtils.isEmpty(searchParam.getOrder())){
-//           urlParam.append("&order="+searchParam.getOrder());
-//       }
 
         return urlParam.toString();
     }
