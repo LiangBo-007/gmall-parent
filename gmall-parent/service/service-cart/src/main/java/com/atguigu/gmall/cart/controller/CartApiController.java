@@ -5,6 +5,7 @@ import com.atguigu.gmall.cart.service.CartService;
 import com.atguigu.gmall.common.result.Result;
 import com.atguigu.gmall.model.cart.CartInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +27,17 @@ public class CartApiController {
         cartInfo.setUserId(userId);
         List<CartInfo> cartInfos = cartService.cartList(cartInfo);
         return Result.ok(cartInfos);
+    }
+
+    //下单结算时查询用户信息
+    @RequestMapping("cartList/{userId}")
+    List<CartInfo> cartList(@PathVariable("userId") String userId) {
+
+        CartInfo cartInfo = new CartInfo();
+        cartInfo.setUserId(userId);
+        List<CartInfo> cartInfos = cartService.cartList(cartInfo);
+        return cartInfos;
+
     }
 
     @RequestMapping("addCart")

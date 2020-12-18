@@ -1,15 +1,18 @@
 package com.atguigu.gmall.user.service.impl;
 
 import com.atguigu.gmall.constant.RedisConst;
+import com.atguigu.gmall.model.user.UserAddress;
 import com.atguigu.gmall.model.user.UserInfo;
 import com.atguigu.gmall.user.mapper.UserInfoMapper;
 import com.atguigu.gmall.user.service.UserService;
+import com.atguigu.gmall.user.service.mapper.UserAddressMapper;
 import com.atguigu.gmall.util.MD5;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -21,10 +24,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserInfoMapper userInfoMapper;
 
+    @Autowired
+    UserAddressMapper userAddressMapper;
+
     @Override
     public UserInfo verify(String token) {
 
-        UserInfo userInfo = (UserInfo)redisTemplate.opsForValue().get("user:login:" + token);
+        UserInfo userInfo = (UserInfo) redisTemplate.opsForValue().get("user:login:" + token);
 
         return userInfo;
     }
@@ -34,13 +40,13 @@ public class UserServiceImpl implements UserService {
 
         // 查询mysql进行用户验证
         QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("login_name",userInfo.getLoginName());
+        queryWrapper.eq("login_name", userInfo.getLoginName());
         queryWrapper.eq("passwd", MD5.encrypt(userInfo.getPasswd()));
         userInfo = userInfoMapper.selectOne(queryWrapper);
 
-        if(null==userInfo){
+        if (null == userInfo) {
             return null;
-        }else {
+        } else {
             // 如果验证通过根据规则，生成token
             String token = UUID.randomUUID().toString();
             userInfo.setToken(token);
@@ -50,5 +56,13 @@ public class UserServiceImpl implements UserService {
         }
 
         return userInfo;
+    }
+
+    @Override
+    public List<UserAddress> findUserAddressListByUserId(String userId) {
+        QueryWrapper<UserAddress> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userId);
+        List<UserAddress> userAddresses = userAddressMapper.selectList(queryWrapper);
+        return userAddresses;
     }
 }

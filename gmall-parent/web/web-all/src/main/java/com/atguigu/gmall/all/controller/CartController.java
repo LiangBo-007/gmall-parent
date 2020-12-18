@@ -20,7 +20,7 @@ public class CartController {
 
         cartFeignClient.addCart(cartInfo);
 
-        return "redirect:cart/addCart.html?skuNum="+cartInfo.getSkuNum();
+        return "redirect:http://cart.gmall.com/cart/addCart.html?skuNum="+cartInfo.getSkuNum();
     }
 
     @RequestMapping("cart/cart.html")
