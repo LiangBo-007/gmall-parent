@@ -14,4 +14,6 @@ public interface OrderService {
     String submitOrder(OrderInfo order);
 
     String genTradeNo(String userId);
+
+    OrderInfo getOrderInfoById(Long orderId);
 }

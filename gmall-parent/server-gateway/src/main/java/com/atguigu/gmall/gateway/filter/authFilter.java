@@ -62,15 +62,12 @@ public class authFilter implements GlobalFilter {
                 ifwhite = true;
             }
         }
-
-
         // 远程调用sso系统进行身份认证
         String token = getToken(request);
         Map<String, Object> userMap = null;
         if (!StringUtils.isEmpty(token)) {
             userMap = userFeignClient.verify(token);
         }
-
         if (null != userMap) {
             //用户认证传递用户id
             Object user = userMap.get("user");

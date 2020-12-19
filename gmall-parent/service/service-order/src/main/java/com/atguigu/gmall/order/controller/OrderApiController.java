@@ -56,17 +56,18 @@ public class OrderApiController {
     //提交订单
     @RequestMapping("auth/submitOrder")
     public Result submitOrder(@RequestBody OrderInfo order, HttpServletRequest request, String tradeNo, Model model) {
+
         String userId = request.getHeader("userId");
-        //验证订单信息
-        boolean cook = orderService.checkTradeNo(userId, tradeNo);
-        //判断并处理
-        if (cook) {
+        // 验证tradeNo
+        boolean b = orderService.checkTradeNo(userId, tradeNo);
+        if (b) {
             order.setUserId(Long.parseLong(userId));
             String orderId = orderService.submitOrder(order);
-            return Result.ok();
+            return Result.ok(orderId);
         } else {
             return Result.fail();
         }
+
     }
 
     //保存下单信息
@@ -74,5 +75,13 @@ public class OrderApiController {
     String genTradeNo(@PathVariable("userId") String userId) {
         String TradeNo = orderService.genTradeNo(userId);
         return TradeNo;
+    }
+
+
+    //获取订单信息
+    @RequestMapping("getOrderInfoById/{orderId}")
+    OrderInfo getOrderInfoById(@PathVariable("orderId") Long orderId) {
+        OrderInfo orderInfo = orderService.getOrderInfoById(orderId);
+        return orderInfo;
     }
 }

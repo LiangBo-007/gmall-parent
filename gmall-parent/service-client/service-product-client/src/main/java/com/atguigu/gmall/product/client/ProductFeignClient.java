@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @FeignClient(value = "service-product")
-public interface  ProductFeignClient {
+public interface ProductFeignClient {
 
     @RequestMapping("api/product/getPrice/{skuId}")
     BigDecimal getPrice(@PathVariable("skuId") Long skuId);
