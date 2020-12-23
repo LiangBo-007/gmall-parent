@@ -1,6 +1,7 @@
 package com.atguigu.gmall.order.service;
 
 import com.atguigu.gmall.model.order.OrderInfo;
+import com.atguigu.gmall.model.payment.PaymentInfo;
 
 /**
  * @description:
@@ -16,4 +17,6 @@ public interface OrderService {
     String genTradeNo(String userId);
 
     OrderInfo getOrderInfoById(Long orderId);
+
+    Long updateOrderPay(PaymentInfo paymentInfo);
 }

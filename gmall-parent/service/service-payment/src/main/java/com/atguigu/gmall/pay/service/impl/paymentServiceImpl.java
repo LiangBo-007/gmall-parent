@@ -92,4 +92,9 @@ public class paymentServiceImpl implements paymentService {
         }
         return map;
     }
+
+    @Override
+    public Map<String, Object> checkPayment(String out_trade_no) {
+        return query(out_trade_no);
+    }
 }

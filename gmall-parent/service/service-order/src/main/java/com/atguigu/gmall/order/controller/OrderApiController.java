@@ -27,7 +27,6 @@ public class OrderApiController {
     @Autowired
     OrderService orderService;
 
-
     @RequestMapping("trade")
     public List<OrderDetail> trade(HttpServletRequest request, Model model) {
 

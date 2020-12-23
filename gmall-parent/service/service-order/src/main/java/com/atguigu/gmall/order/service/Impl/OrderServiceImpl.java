@@ -4,8 +4,10 @@ import com.atguigu.gmall.model.enums.OrderStatus;
 import com.atguigu.gmall.model.enums.ProcessStatus;
 import com.atguigu.gmall.model.order.OrderDetail;
 import com.atguigu.gmall.model.order.OrderInfo;
+import com.atguigu.gmall.model.payment.PaymentInfo;
 import com.atguigu.gmall.order.mapper.OrderDetailMapper;
 import com.atguigu.gmall.order.mapper.OrderInfoMapper;
+import com.atguigu.gmall.order.mapper.PaymentInfoMapper;
 import com.atguigu.gmall.order.service.OrderService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,8 @@ public class OrderServiceImpl implements OrderService {
     OrderInfoMapper orderInfoMapper;
     @Autowired
     OrderDetailMapper orderDetailMapper;
+    @Autowired
+    PaymentInfoMapper paymentInfoMapper;
 
     //判断订单是否重复
     @Override
@@ -94,6 +98,26 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDetail> orderDetails = orderDetailMapper.selectList(orderInfoQueryWrapper);
         orderInfo.setOrderDetailList(orderDetails);
         return orderInfo;
+    }
+
+    //订单支付通知
+    @Override
+    public Long updateOrderPay(PaymentInfo paymentInfo) {
+        OrderInfo orderInfo = new OrderInfo();
+        orderInfo.setProcessStatus(ProcessStatus.PAID.getComment());
+        orderInfo.setTradeBody(paymentInfo.getCallbackContent());
+
+        QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("out_trade_no", paymentInfo.getOutTradeNo());
+
+        orderInfoMapper.update(orderInfo, queryWrapper);
+        OrderInfo orderInfoFromDb = orderInfoMapper.selectOne(queryWrapper);
+
+        if (null != orderInfoFromDb) {
+            return orderInfoFromDb.getId();
+        } else {
+            return null;
+        }
     }
 
     //商品价格计算

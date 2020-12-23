@@ -18,4 +18,6 @@ public interface paymentService {
     void updatePayment(PaymentInfo paymentInfo);
 
     Map<String, Object> query(String out_trade_no);
+
+    Map<String, Object> checkPayment(String out_trade_no);
 }

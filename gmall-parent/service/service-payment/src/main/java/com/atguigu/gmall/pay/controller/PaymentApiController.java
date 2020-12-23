@@ -28,6 +28,7 @@ public class PaymentApiController {
     @Autowired
     OrderFengnClient orderFengnClient;
 
+
     //支付成功回调函数(同步)
     @RequestMapping("alipay/callback/return")
     //保存回调信息
@@ -42,8 +43,6 @@ public class PaymentApiController {
         paymentInfo.setPaymentStatus(PaymentStatus.PAID.toString());
         paymentInfo.setCallbackTime(new Date());
         paymentInfo.setCallbackContent(callback_content);
-        paymentService.updatePayment(paymentInfo);
-
         return "<form action=\"http://payment.gmall.com/paySuccess.html\">\n" +
                 "</form>\n" +
                 "<script>\n" +
@@ -74,7 +73,6 @@ public class PaymentApiController {
         paymentInfo.setCreateTime(new Date());
         paymentInfo.setSubject(orderInfoById.getOrderDetailList().get(0).getSkuName());
         paymentService.savePaymentInfo(paymentInfo);
-
         return form;
     }
 
